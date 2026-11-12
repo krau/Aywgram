@@ -7,7 +7,6 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 */
 #include "tgw/tgw_log_box.h"
 
-#include "core/update_channel.h"
 #include "lang/lang_keys.h"
 #include "tgw/tgw_runtime.h"
 #include "ui/layers/generic_box.h"
