@@ -84,21 +84,21 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 #include "ui/wrap/slide_wrap.h"
 #include "window/window_controller.h"
 #include "window/window_session_controller.h"
+
+#include <QtGui/QClipboard>
+#include <QtGui/QGuiApplication>
+#include <QtGui/QWindow>
+
 #include "styles/style_chat_helpers.h"
 #include "styles/style_info.h"
 #include "styles/style_layers.h"
 #include "styles/style_menu_icons.h"
 #include "styles/style_settings.h"
 
-#include <QtGui/QClipboard>
-#include <QtGui/QGuiApplication>
-#include <QtGui/QWindow>
-
 // AyuGram includes
 #include "ayu/ui/settings/settings_main.h"
 #include "ayu/ui/utils/ayu_profile_values.h"
 #include "ayu/utils/telegram_helpers.h"
-
 
 namespace Settings {
 namespace {
@@ -659,9 +659,7 @@ void BuildHelpSection(SectionBuilder &builder) {
 		.id = u"main/features"_q,
 		.title = tr::lng_settings_features(),
 		.icon = { &st::menuIconEmojiObjects },
-		.onClick = [] {
-			UrlClickHandler::Open(tr::lng_telegram_features_url(tr::now));
-		},
+		.onClick = [=] { OpenFeatures(controller); },
 		.keywords = { u"tips"_q, u"tutorial"_q },
 	});
 
@@ -932,8 +930,8 @@ void SetupValidatePhoneNumberSuggestion(
 		st::boxRowPadding);
 	label->setClickHandlerFilter([=, weak = base::make_weak(controller)](
 			const auto &...) {
-		UrlClickHandler::Open(
-			tr::lng_settings_suggestion_phone_number_about_link(tr::now),
+		HiddenUrlClickHandler::OpenTranslated(
+			tr::lng_settings_suggestion_phone_number_about_link,
 			QVariant::fromValue(ClickHandlerContext{
 				.sessionWindow = weak,
 			}));
@@ -1244,8 +1242,16 @@ Type MainId() {
 }
 
 void OpenFaq(base::weak_ptr<Window::SessionController> weak) {
-	UrlClickHandler::Open(
-		tr::lng_settings_faq_link(tr::now),
+	HiddenUrlClickHandler::OpenTranslated(
+		tr::lng_settings_faq_link,
+		QVariant::fromValue(ClickHandlerContext{
+			.sessionWindow = weak,
+		}));
+}
+
+void OpenFeatures(base::weak_ptr<Window::SessionController> weak) {
+	HiddenUrlClickHandler::OpenTranslated(
+		tr::lng_telegram_features_url,
 		QVariant::fromValue(ClickHandlerContext{
 			.sessionWindow = weak,
 		}));

@@ -38,6 +38,14 @@ inline uint64 ActivationWindowId(not_null<QWidget*> window) {
 inline void ActivateOtherProcess(uint64 processId, uint64 windowId) {
 }
 
+inline bool WaitForProcessExit(uint64 processId, crl::time timeout) {
+	return true;
+}
+
+inline bool LocalSocketPeerAllowed(qintptr) {
+	return true;
+}
+
 inline QString ApplicationIconName() {
 	return {};
 }

@@ -164,6 +164,7 @@ public:
 
 	void parseNow();
 	void setDisabled(bool disabled);
+	[[nodiscard]] bool disabled() const;
 
 	[[nodiscard]] const rpl::variable<QStringList> &list() const {
 		return _list;
