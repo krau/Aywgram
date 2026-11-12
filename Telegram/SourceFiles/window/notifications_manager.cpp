@@ -775,7 +775,11 @@ void System::clearIncomingTill(not_null<Data::Thread*> thread, MsgId till) {
 		if (const auto alerts = _whenAlerts.find(queuedThread); alerts != _whenAlerts.end()) {
 			for (const auto when : clearedTimes) {
 				if (!ranges::any_of(times, [&](const auto &entry) { return entry.second == when; })) {
-					alerts->second.remove(when);
+					for (auto i = alerts->second.begin(); i != alerts->second.end();) {
+						i = (i->first == when)
+							? alerts->second.erase(i)
+							: std::next(i);
+					}
 				}
 			}
 		}
