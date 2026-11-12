@@ -5687,7 +5687,7 @@ void ListWidget::mouseActionUpdate() {
 	}
 
 	TextState dragState;
-	ClickHandlerHost *lnkhost = nullptr;
+	auto lnkhost = (ClickHandlerHost*)nullptr;
 	auto inTextSelection = (_overState.pointState != PointState::Outside)
 		&& (_overState.itemId == _pressState.itemId)
 		&& hasSelectedText();
