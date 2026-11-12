@@ -96,12 +96,12 @@ not_null<RpWidget*> CreateTitleSubWidget(
 		};
 		fill(leftArea, left);
 		fill(rightArea, right);
-		const auto middle = middleArea.intersected(clip);
+		const QRect middle = middleArea.intersected(clip);
 		if (!middle.isEmpty()) {
 			p.fillRect(middle, active ? st::titleBgActive : st::titleBg);
 			p.setPen(active ? st::titleFgActive : st::titleFg);
 			const auto top = (height - state->st.font->height) / 2;
-			state->text.draw(p, left.width(), top, width);
+			state->text.draw(p, left.width(), top, width, style::al_left);
 		}
 	}, result->lifetime());
 
