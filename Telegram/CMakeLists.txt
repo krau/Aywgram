@@ -2270,6 +2270,7 @@ PRIVATE
     test/test_activation.h
     test/test_agent.cpp
     test/test_agent.h
+    test/test_release_seams.cpp
     test/test_box_button.cpp
     test/test_box_button.h
     test/test_capture.cpp
