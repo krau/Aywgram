@@ -20,11 +20,7 @@ https://github.com/telegramdesktop/tdesktop/blob/master/LEGAL
 namespace Tgw {
 namespace {
 
-#ifdef _DEBUG
-constexpr auto kLogAvailable = true;
-#else
-constexpr auto kLogAvailable = Core::BuildIsCanary;
-#endif // _DEBUG
+constexpr auto kLogAvailable = false;
 
 void LogBox(not_null<Ui::GenericBox*> box, base::weak_ptr<Runtime> weak) {
 	const auto text = box->lifetime().make_state<rpl::variable<QString>>();
