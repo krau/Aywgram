@@ -1422,6 +1422,7 @@ PRIVATE
     history/view/history_view_text_helper.h
     history/view/history_view_touch_scroll.cpp
     history/view/history_view_touch_scroll.h
+    history/view/history_view_touch_speed.h
     history/view/history_view_transcribe_button.cpp
     history/view/history_view_transcribe_button.h
     history/view/history_view_translate_bar.cpp
@@ -2296,6 +2297,8 @@ PRIVATE
     test/test_hover.h
     test/test_ink.cpp
     test/test_ink.h
+    test/test_lang_ids_migration.cpp
+    test/test_lang_ids_migration.h
     test/test_launch_fuse.cpp
     test/test_launch_fuse.h
     test/test_layer_root.cpp
@@ -2564,6 +2567,8 @@ PRIVATE
     wallet/wallet_phrase_shares.h
     wallet/wallet_rates.cpp
     wallet/wallet_rates.h
+    wallet/wallet_row_address_chips.cpp
+    wallet/wallet_row_address_chips.h
     wallet/wallet_send_preparation.cpp
     wallet/wallet_send_preparation.h
     wallet/wallet_session.cpp
@@ -2721,6 +2726,10 @@ else()
     PRIVATE
         tray_accounts_menu_dummy.cpp
     )
+endif()
+
+if (TDESKTOP_L10N_CAPTURE)
+    include(${TDESKTOP_L10N_CAPTURE}/capture.cmake)
 endif()
 
 if (NOT build_winstore)
