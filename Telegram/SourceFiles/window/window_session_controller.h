@@ -346,6 +346,10 @@ protected:
 	void fullInfoLoadedHook(not_null<PeerData*> peer);
 
 private:
+	void resolveContactToken(
+		const QString &token,
+		Fn<void(not_null<PeerData*>)> done);
+	void cancelContactTokenResolve();
 	void resolvePhone(
 		const QString &phone,
 		Fn<void(not_null<PeerData*>)> done);
@@ -391,6 +395,9 @@ private:
 	MTP::Sender _api;
 
 	mtpRequestId _resolveRequestId = 0;
+	mtpRequestId _contactTokenRequestId = 0;
+	QString _contactToken;
+	Fn<void(not_null<PeerData*>)> _contactTokenDone;
 	PeerData *_waitingDirectChannel = nullptr;
 
 	History *_showingRepliesHistory = nullptr;
@@ -490,8 +497,6 @@ public:
 
 	void setDialogsEntryState(Dialogs::EntryState state);
 	[[nodiscard]] Dialogs::EntryState dialogsEntryStateCurrent() const;
-	[[nodiscard]] auto dialogsEntryStateValue() const
-		-> rpl::producer<Dialogs::EntryState>;
 	bool switchInlineQuery(
 		Dialogs::EntryState to,
 		not_null<UserData*> bot,
