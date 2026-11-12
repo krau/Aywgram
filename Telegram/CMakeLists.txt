@@ -35,6 +35,10 @@ include(cmake/lib_tgcalls.cmake)
 include(cmake/lib_prisma.cmake)
 include(cmake/lib_fido2.cmake)
 include(cmake/lib_zxcvbn.cmake)
+include(cmake/lib_litehtml.cmake)
+include(cmake/lib_quickjs.cmake)
+include(cmake/lib_widget_renderer.cmake)
+include(cmake/lib_widget_sandbox.cmake)
 include(cmake/td_export.cmake)
 include(cmake/td_gram.cmake)
 include(cmake/td_iv.cmake)
@@ -64,6 +68,10 @@ set_target_properties(Telegram PROPERTIES AUTOMOC ON)
 target_link_libraries(Telegram
 PRIVATE
     tdesktop::lib_fido2
+    tdesktop::lib_litehtml
+    tdesktop::lib_quickjs
+    tdesktop::lib_widget_renderer
+    tdesktop::lib_widget_sandbox
     tdesktop::lib_tgcalls
 
     # Order in this list defines the order of include paths in command line.
@@ -1244,6 +1252,8 @@ PRIVATE
     history/view/media/history_view_giveaway.h
     history/view/media/history_view_gram_transfer.cpp
     history/view/media/history_view_gram_transfer.h
+    history/view/media/history_view_html_widget.cpp
+    history/view/media/history_view_html_widget.h
     history/view/media/history_view_invoice.cpp
     history/view/media/history_view_invoice.h
     history/view/media/history_view_large_emoji.cpp
@@ -1297,6 +1307,8 @@ PRIVATE
     history/view/media/history_view_unique_gift.h
     history/view/media/history_view_unsupported_notice.cpp
     history/view/media/history_view_unsupported_notice.h
+    history/view/media/history_view_unsupported_widget.cpp
+    history/view/media/history_view_unsupported_widget.h
     history/view/media/history_view_userpic_suggestion.cpp
     history/view/media/history_view_userpic_suggestion.h
     history/view/media/history_view_video_message_seek.cpp
@@ -2053,6 +2065,7 @@ PRIVATE
     platform/win/overlay_widget_win.h
     platform/win/specific_win.cpp
     platform/win/specific_win.h
+    platform/win/system_intl_win.cpp
     platform/win/translate_provider_win.h
     platform/win/tray_win.cpp
     platform/win/tray_win.h
@@ -2079,6 +2092,7 @@ PRIVATE
     platform/platform_overlay_widget.cpp
     platform/platform_overlay_widget.h
     platform/platform_specific.h
+    platform/platform_system_intl.h
     platform/platform_translate_provider.h
     platform/platform_tray.h
     platform/platform_webauthn.h
@@ -2260,6 +2274,10 @@ PRIVATE
     test/test_box_button.h
     test/test_capture.cpp
     test/test_capture.h
+    test/test_console_shield.cpp
+    test/test_console_shield.h
+    test/test_controller_ready.cpp
+    test/test_controller_ready.h
     test/test_custom_emoji.cpp
     test/test_custom_emoji.h
     test/test_expiry_window.cpp
@@ -2311,6 +2329,53 @@ PRIVATE
     test/test_via_window.h
     test/test_widgets.cpp
     test/test_widgets.h
+    tgw/tgw_backend.cpp
+    tgw/tgw_backend.h
+    tgw/tgw_bridge.cpp
+    tgw/tgw_bridge.h
+    tgw/tgw_canvas.cpp
+    tgw/tgw_canvas.h
+    tgw/tgw_cursor.cpp
+    tgw/tgw_cursor.h
+    tgw/tgw_emoji.cpp
+    tgw/tgw_emoji.h
+    tgw/tgw_emoji_images.cpp
+    tgw/tgw_emoji_images.h
+    tgw/tgw_intl.cpp
+    tgw/tgw_intl.h
+    tgw/tgw_log_box.cpp
+    tgw/tgw_log_box.h
+    tgw/tgw_media.cpp
+    tgw/tgw_media.h
+    tgw/tgw_painter.cpp
+    tgw/tgw_painter.h
+    tgw/tgw_painter_filters.cpp
+    tgw/tgw_painter_filters.h
+    tgw/tgw_renderer.cpp
+    tgw/tgw_renderer.h
+    tgw/tgw_resources.cpp
+    tgw/tgw_resources.h
+    tgw/tgw_runtime.cpp
+    tgw/tgw_runtime.h
+    tgw/tgw_scroll.cpp
+    tgw/tgw_scroll.h
+    tgw/tgw_scroll_lists.cpp
+    tgw/tgw_selection.cpp
+    tgw/tgw_selection.h
+    tgw/tgw_selection_lists.cpp
+    tgw/tgw_state.cpp
+    tgw/tgw_state.h
+    tgw/tgw_storage.cpp
+    tgw/tgw_storage.h
+    tgw/tgw_storage_disk.cpp
+    tgw/tgw_storage_disk.h
+    tgw/tgw_theme.cpp
+    tgw/tgw_theme.h
+    tgw/tgw_touch.cpp
+    tgw/tgw_touch.h
+    tgw/tgw_touch_lists.cpp
+    tgw/tgw_wallet.cpp
+    tgw/tgw_wallet.h
     ui/boxes/edit_invite_link_session.cpp
     ui/boxes/edit_invite_link_session.h
     ui/boxes/emoji_stake_box.cpp
@@ -2513,6 +2578,8 @@ PRIVATE
     wallet/wallet_stream.h
     wallet/wallet_ton_connect.cpp
     wallet/wallet_ton_connect.h
+    wallet/wallet_ton_connect_bot.cpp
+    wallet/wallet_ton_connect_bot.h
     wallet/wallet_ton_connect_box.cpp
     wallet/wallet_ton_connect_box.h
     wallet/wallet_ton_connect_claims.cpp
@@ -2690,6 +2757,7 @@ PRIVATE
     qrc/telegram/telegram.qrc
     qrc/telegram/tlv.qrc
     qrc/telegram/sounds.qrc
+    qrc/telegram/tgw.qrc
     winrc/Telegram.rc
     winrc/Telegram.manifest
     langs/lang.strings
@@ -3008,6 +3076,7 @@ if (MSVC)
         /DELAYLOAD:wtsapi32.dll
         /DELAYLOAD:propsys.dll
         /DELAYLOAD:uiautomationcore.dll
+        /DELAYLOAD:icu.dll
     )
     if (QT_VERSION GREATER 6)
         target_link_libraries(Telegram
