@@ -6334,11 +6334,14 @@ void HistoryWidget::sendTextWithTags(
 
 	auto wasScrollBottom = std::optional<int>();
 	if (hasText && message.webPage.url.isEmpty()) {
-		auto from = Ui::PrepareTextSending(
-			_field,
-			textWithTags,
-			nextLocalMessageId,
-			(options.scheduled != 0));
+		auto from = std::optional<Ui::MessageSendingAnimationFrom>();
+		if (nextLocalMessageId) {
+			from = Ui::PrepareTextSending(
+				_field,
+				textWithTags,
+				*nextLocalMessageId,
+				(options.scheduled != 0));
+		}
 		if (from) {
 			if (from->fieldText
 				&& _list
@@ -6377,9 +6380,9 @@ void HistoryWidget::sendTextWithTags(
 			: Data::HistoryUpdate::Flag::MessageSent));
 	if (wasScrollBottom) {
 		const auto lift = _scroll->y() + _scroll->height() - *wasScrollBottom;
-		const auto item = session().data().message(
-			_history->peer,
-			nextLocalMessageId);
+		const auto item = nextLocalMessageId
+			? session().data().message(_history->peer, *nextLocalMessageId)
+			: nullptr;
 		if (item && lift > 0) {
 			liftItemReveal(item, lift);
 		}
