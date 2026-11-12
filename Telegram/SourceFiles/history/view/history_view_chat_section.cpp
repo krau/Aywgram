@@ -2731,11 +2731,14 @@ void ChatWidget::sendTextWithTags(
 	const auto field = _composeControls->fieldForMention();
 	auto wasScrollBottom = std::optional<int>();
 	if (field && hasText && message.webPage.url.isEmpty()) {
-		auto from = Ui::PrepareTextSending(
-			field,
-			textWithTags,
-			nextLocalMessageId,
-			(options.scheduled != 0));
+		auto from = std::optional<Ui::MessageSendingAnimationFrom>();
+		if (nextLocalMessageId) {
+			from = Ui::PrepareTextSending(
+				field,
+				textWithTags,
+				*nextLocalMessageId,
+				(options.scheduled != 0));
+		}
 		if (from) {
 			if (from->fieldText
 				&& !_scroll->isHidden()
@@ -2767,7 +2770,9 @@ void ChatWidget::sendTextWithTags(
 	finishSending(options);
 	if (wasScrollBottom) {
 		const auto lift = _scroll->y() + _scroll->height() - *wasScrollBottom;
-		const auto item = session().data().message(_peer, nextLocalMessageId);
+		const auto item = nextLocalMessageId
+			? session().data().message(_peer, *nextLocalMessageId)
+			: nullptr;
 		if (item && lift > 0) {
 			_inner->liftItemReveal(item, lift);
 		}

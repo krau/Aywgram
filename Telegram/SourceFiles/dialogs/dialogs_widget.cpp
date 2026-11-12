@@ -4963,8 +4963,8 @@ void Widget::showSearchFrom() {
 			peer,
 			crl::guard(this, [=](not_null<PeerData*> from) {
 				controller()->hideLayer();
+				auto copy = _searchState;
 				if (const auto strong = weak.get()) {
-					auto copy = _searchState;
 					copy.inChat = strong;
 				} else {
 					return;

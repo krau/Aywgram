@@ -3523,8 +3523,6 @@ void OverlayWidget::toMessage() {
 			}
 		}
 	}
-		}
-	}
 }
 
 void OverlayWidget::notifyFileDialogShown(bool shown) {
