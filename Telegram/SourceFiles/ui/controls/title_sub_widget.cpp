@@ -74,17 +74,13 @@ not_null<RpWidget*> CreateTitleSubWidget(
 		const auto &right = st::titleSubWidgetRight;
 		const auto width = result->width();
 		const auto height = result->height();
-		const auto leftArea = QRect(0, 0, left.width(), height);
+		const auto leftArea = QRect(QPoint(0, 0), QSize(left.width(), height));
 		const auto rightArea = QRect(
-			width - right.width(),
-			0,
-			right.width(),
-			height);
+			QPoint(width - right.width(), 0),
+			QSize(right.width(), height));
 		const auto middleArea = QRect(
-			left.width(),
-			0,
-			width - left.width() - right.width(),
-			height);
+			QPoint(left.width(), 0),
+			QSize(width - left.width() - right.width(), height));
 		const auto fill = [&](QRect area, const style::icon &icon) {
 			if (!area.intersects(clip)) {
 				return;
