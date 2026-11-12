@@ -249,7 +249,7 @@ void ShowLinkRulesEditor(
 }
 
 void BuildTranslator(SectionBuilder &builder, AyuSectionBuilder &ayu) {
-	builder.addSubsectionTitle(tr::lng_translate_settings_subtitle());
+	builder.addSubsectionTitle(tr::lng_translate_settings());
 
 	auto *settings = &AyuSettings::getInstance();
 
