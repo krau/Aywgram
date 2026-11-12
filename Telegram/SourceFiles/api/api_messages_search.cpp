@@ -310,7 +310,7 @@ QString SearchFilterLabel(SearchFilter filter) {
 	case SearchFilter::VoiceMessages:
 		return tr::lng_media_type_audios(tr::now);
 	case SearchFilter::VideoMessages:
-		return tr::lng_media_type_rounds(tr::now);
+		return tr::lng_media_video_messages_title(tr::now);
 	case SearchFilter::Gifs:
 		return tr::lng_media_type_gifs(tr::now);
 	case SearchFilter::Polls:

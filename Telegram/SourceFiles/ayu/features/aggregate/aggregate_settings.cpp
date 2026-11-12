@@ -153,7 +153,7 @@ QString CategoryLabel(Category category) {
 	case Category::File: return tr::lng_media_type_files(tr::now);
 	case Category::Link: return tr::lng_all_links(tr::now);
 	case Category::Gif: return tr::lng_media_type_gifs(tr::now);
-	case Category::RoundVideo: return tr::lng_media_type_rounds(tr::now);
+	case Category::RoundVideo: return tr::lng_media_video_messages_title(tr::now);
 	case Category::Sticker: return tr::lng_switch_stickers(tr::now);
 	case Category::Poll: return tr::lng_media_type_polls(tr::now);
 	case Category::Location: return tr::ayu_AggregateLocations(tr::now);

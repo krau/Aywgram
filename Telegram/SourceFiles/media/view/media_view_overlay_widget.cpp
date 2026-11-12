@@ -5467,7 +5467,7 @@ void OverlayWidget::initStreamingThumbnail() {
 		: _document
 		? _documentMedia->thumbnailInline()
 		: _photoMedia->thumbnailInline();
-	const auto size = (_photo && !_livePhotoVideo)
+	auto size = (_photo && !_livePhotoVideo)
 		? QSize(
 			_photo->videoLocation(Data::PhotoSize::Large).width(),
 			_photo->videoLocation(Data::PhotoSize::Large).height())

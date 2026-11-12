@@ -1109,7 +1109,7 @@ void Widget::updateStatus() {
 	_status->setVisible(_newMessages);
 	_edgeStatus->setText(data->loading() ? tr::lng_contacts_loading(tr::now)
 		: data->failed() ? tr::ayu_AggregatePartial(tr::now)
-		: empty ? tr::lng_search_no_results(tr::now)
+		: empty ? tr::lng_search_messages_none(tr::now)
 		: tr::ayu_AggregateEnd(tr::now));
 	_edgeStatus->setVisible(data->loading() || data->failed() || empty || !data->hasMore());
 	updateGeometry();
