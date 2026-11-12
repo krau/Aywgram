@@ -52,6 +52,7 @@ namespace Core {
 namespace {
 
 constexpr auto kUpdaterTimeout = 10 * crl::time(1000);
+constexpr auto kMaxResponseSize = 1024 * 1024;
 constexpr auto kMetadataUrl = "https://github.com/NahidaBuer/AywGram/"
 	"releases/latest/download/update-metadata.json";
 

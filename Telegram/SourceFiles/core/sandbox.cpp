@@ -47,6 +47,8 @@ namespace Core {
 namespace {
 
 constexpr auto kLocalClientBufferLimit = 1024 * 1024;
+constexpr auto kCleanupIpcTimeout = 10 * crl::time(1000);
+constexpr auto kCleanupQuitTimeout = 30 * crl::time(1000);
 
 base::options::toggle OptionDeadlockDetector({
 	.id = kOptionDeadlockDetector,
@@ -207,10 +209,6 @@ int Sandbox::start() {
 	}
 	_started = true;
 	return exec();
-}
-
-void Sandbox::NotifySystemShuttingDown() {
-	SystemShuttingDown = true;
 }
 
 int Sandbox::stopRunningInstance() {
