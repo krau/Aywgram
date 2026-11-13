@@ -553,8 +553,6 @@ PRIVATE
     ui/controls/tabbed_search.h
     ui/controls/text_copied_toast.cpp
     ui/controls/text_copied_toast.h
-    ui/controls/title_sub_widget.cpp
-    ui/controls/title_sub_widget.h
     ui/controls/ton_common.cpp
     ui/controls/ton_common.h
     ui/controls/ttl_media.cpp
