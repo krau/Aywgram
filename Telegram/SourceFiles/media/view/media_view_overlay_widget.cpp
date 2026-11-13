@@ -3525,6 +3525,22 @@ void OverlayWidget::toMessage() {
 	}
 }
 
+void OverlayWidget::toOriginalMessage() {
+	if (!_message) {
+		return;
+	}
+	const auto weakSession = base::make_weak(&_message->history()->session());
+	const auto itemId = _message->fullId();
+	close();
+	if (const auto window = findWindow()) {
+		if (const auto strong = weakSession.get()) {
+			if (const auto item = strong->data().message(itemId)) {
+				window->showMessage(item);
+			}
+		}
+	}
+}
+
 void OverlayWidget::notifyFileDialogShown(bool shown) {
 	_helper->notifyFileDialogShown(shown);
 }
